@@ -1,21 +1,43 @@
-import { it, expect } from "vitest";
-import { transformToNumber } from "./numbers";
+import { it, expect, describe } from "vitest";
+import { cleanNumbers, transformToNumber } from "./numbers";
 
-it("should return a number when given a string", () => {
-  const input = "1";
+describe("transformToNumber()", () => {
+  it("should return a number when given a string", () => {
+    const input = "1";
+  
+    const result = transformToNumber(input);
+  
+    expect(result).toBe(1).toBeTypeOf('number');
+  });
+  
+  it("should return NaN if invalid value is provided", () => {
+    const input = "invalid";
+    const input2 = {};
+  
+    const result = transformToNumber(input);
+    const result2 = transformToNumber(input2);
+  
+    expect(result).toBeNaN();
+    expect(result2).toBeNaN();
+  });
+})
 
-  const result = transformToNumber(input);
+describe('cleanNumbers()', () => {
+  it('should return an array of numbers if given an array of string number values is provided', () => {
+    const input = ['1', '2'];
+    
+    const result = cleanNumbers(input);
+    
+    expect(result).toEqual([1, 2]);
+  })
 
-  expect(result).toBe(1).toBeTypeOf('number');
-});
+  it('should yield an error if an array with at least one empty string is provided', () => {
+    const input = ['', 2];
 
-it("should return NaN if invalid value is provided", () => {
-  const input = "invalid";
-  const input2 = {};
+    const resultFn = () => {
+      cleanNumbers(input);
+    }
 
-  const result = transformToNumber(input);
-  const result2 = transformToNumber(input2);
-
-  expect(result).toBeNaN();
-  expect(result2).toBeNaN();
-});
+    expect(resultFn).toThrow();
+  })
+})
