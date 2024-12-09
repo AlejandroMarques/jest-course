@@ -3,9 +3,9 @@ import { HttpError, ValidationError } from './errors';
 
 describe('HttpError', () => {
     it('should assign props correctly', () => {
-        const statusCode = 'testStatusCode'
+        const statusCode = 1
         const message = 'testMessage'
-        const data = {id: 1, name: 'error'}
+        const data = {id: 1}
 
         const newError = new HttpError(statusCode, message, data)
 

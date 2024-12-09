@@ -2,37 +2,45 @@ import { expect, describe, it } from 'vitest'
 import { validateNotEmpty } from './validation';
 
 describe('validateNotEmpty()', () => {
-    it('shouldm\'t throw an error if passed a valid string', () => {
-        const errorMessage = 'Input cannot be empty';
-        const text = 'test';
-
-        const fn = () => {
-            validateNotEmpty(text, errorMessage);
-        }
-
-        expect(fn).not.toThrow()
-    })
-
-
-    it('should throw an error with the errorMessage if passed an empty string', () => {
-        const errorMessage = 'Input cannot be empty';
+    it('should throw an error if provided an empty string', () => {
         const text = '';
 
         const fn = () => {
+            validateNotEmpty(text);
+        }
+
+        expect(fn).toThrow()
+    })
+
+    it('should throw an error if provided a string only with blank spaces', () => {
+        const text = ' ';
+
+        const fn = () => {
+            validateNotEmpty(text);
+        }
+
+        expect(fn).toThrow()
+    })
+
+    it('should throw an error with the provided error message', () => {
+        const text = '';
+        const errorMessage = 'Input cannot be empty';
+
+        const fn = () => {
             validateNotEmpty(text, errorMessage);
         }
 
         expect(fn).toThrow()
     })
 
-    it('should throw an error with the errorMessage if no text is passed', () => {
-        const errorMessage = 'Input cannot be empty';
+    it('shouldn\'t throw an error if passed a valid string', () => {
+        const text = 'test';
 
         const fn = () => {
-            validateNotEmpty(undefined, errorMessage);
+            validateNotEmpty(text);
         }
 
-        expect(fn).toThrow()
+        expect(fn).not.toThrow()
     })
 
     it('should throw an error with the errorMessage if an invalid value is passed', () => {

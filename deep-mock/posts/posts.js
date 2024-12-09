@@ -7,6 +7,8 @@ export function savePost(postData) {
 }
 
 export function extractPostData(form) {
+  if(!form) throw new Error()
+
   const title = form.get('title');
   const content = form.get('content');
 
